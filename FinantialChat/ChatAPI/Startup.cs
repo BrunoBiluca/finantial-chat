@@ -36,7 +36,7 @@ namespace ChatAPI {
             });
 
             app.UseSwagger();
-            app.UseSwaggerUI(o => o.SwaggerEndpoint("/swagger/v1/swagger.json", "LeaderBord Api V1"));
+            app.UseSwaggerUI(o => o.SwaggerEndpoint("/swagger/v1/swagger.json", "Chat Api V1"));
         }
     }
 }

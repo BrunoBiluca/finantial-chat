@@ -26,15 +26,32 @@
 # Task
 
 - ChatAPI
-  - POST messages
-  - 
+  - &check; Check chat room theory
+  - _ Websocket connection between client-server
+    - _ Send the message
+  - _ Server broadcasts a message
+  - _ Get message history  
+  - _ Message persistence
 
 - StockConsultantBot
 
 - FrontEnd
-  - Chat user interface
+  - &check; Chat user interface
+  - _ Sort messages by timestamp
+  - _ Test for React render
+  - _ Chat interface using the 100% height
+  - _ layout v2
+    - _ rounded button
+    - _ better colors
 
 - Authentication
+
+## Secondary goals
+
+- Chat will show when user is connected and disconnected
+- Chat statistics
+  - currentClients
+  - totalClients
 
 # Questions:
  - What is build an installer?
