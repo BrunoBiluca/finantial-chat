@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "UZm9BCxG+IH8CXP3La0Afy5PFTR4oBB/9i80fDukscL2C5HFGKIVF3v8wuvJhqEtbnpKeJtZQSfYWJBVo7kaXg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\bruno\\Documents\\brunobiluca_projects\\financial_chat\\FinantialChat\\ChatAPI\\ChatAPI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\bruno\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\bruno\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
+    "C:\\Users\\bruno\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.3\\swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
+    "C:\\Users\\bruno\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.6.3\\swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512"
+  ],
+  "logs": []
+}
