@@ -27,24 +27,31 @@
 
 - ChatAPI
   - &check; Check chat room theory
-  - _ Websocket connection between client-server
-    - _ Send the message
-  - _ Server broadcasts a message
-  - _ Get message history  
+  - &check; Websocket connection between client-server
+    - &check; Send the message
+  - &check; Server broadcasts a message
   - _ Message persistence
+  - _ Get message history  
+  - _ Add http protocol for local connections
 
 - StockConsultantBot
 
 - FrontEnd
   - &check; Chat user interface
+  - &check; Front-end refactor to better compoments
+  - &check; Add Enter to send messages
   - _ Sort messages by timestamp
   - _ Test for React render
   - _ Chat interface using the 100% height
   - _ layout v2
     - _ rounded button
     - _ better colors
+  - stick chat-message to bottom when updated
 
 - Authentication
+
+- Bugs
+  - _ Last sended message is ovewritten on chat message board
 
 ## Secondary goals
 

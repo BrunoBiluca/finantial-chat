@@ -25,6 +25,7 @@ namespace ChatAPI {
                 app.UseDeveloperExceptionPage();
             }
 
+            // TODO: adicionar http redirection para modo local
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -37,6 +38,9 @@ namespace ChatAPI {
 
             app.UseSwagger();
             app.UseSwaggerUI(o => o.SwaggerEndpoint("/swagger/v1/swagger.json", "Chat Api V1"));
+
+            app.UseWebSockets();
+            app.UseMiddleware<ChatWebSocketMiddleware>();
         }
     }
 }
