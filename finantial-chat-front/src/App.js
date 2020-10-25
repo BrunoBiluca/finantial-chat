@@ -1,47 +1,37 @@
-import React from 'react';
-import './App.css';
+import React, { useState } from 'react'
+import MessageBoard from './MessageBoard'
+import './App.css'
 
 function App() {
+
+  const [user, setUser] = useState('Bruno')
+  const [message, setMessage] = useState()
+  const [messagesList, setMessagesList] = useState([
+    {'user': 'user 1', "message": "message 1"},
+    {'user': 'user 2', "message": "message 2"},
+    {'user': 'user 1', "message": "message 3"},
+    {'user': 'user 2', "message": "message 4"},
+    {'user': 'user 1', "message": "message 5"}
+  ])
+
+  function sendMessage(){
+    let newMessage = {user: user, message: message}
+    setMessage('')
+    setMessagesList([...messagesList, newMessage])
+  }
+
   return (
     <div className="chat">
       <div className="chat-users">
         <h3>On-line users</h3>
+        <p> - Bruno</p>
         <h3>Off-line users</h3>
       </div>
       <div className="chat-main">
-        <div className="chat-messages">
-          <div className="message">
-            <p>User 1</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mattis pellentesque placerat.</p>
-          </div>
-          <div className="message">
-            <p>User 2</p>
-            <p>Maecenas mollis condimentum rutrum. Morbi vitae nisl luctus neque auctor aliquet.</p>
-          </div>
-          <div className="message">
-            <p>User 1</p>
-            <p>Sed finibus, nisi sit amet condimentum dignissim, nunc tellus laoreet enim, quis semper tellus ipsum vitae felis. Pellentesque blandit sed nisl vitae convallis. In scelerisque vehicula euismod. Donec sit amet odio fermentum, sodales ex in, lobortis velit. Praesent rutrum interdum mi et hendrerit.</p>
-          </div>
-          <div className="message">
-            <p>User 1</p>
-            <p>Sed finibus, nisi sit amet condimentum dignissim, nunc tellus laoreet enim, quis semper tellus ipsum vitae felis. Pellentesque blandit sed nisl vitae convallis. In scelerisque vehicula euismod. Donec sit amet odio fermentum, sodales ex in, lobortis velit. Praesent rutrum interdum mi et hendrerit.</p>
-          </div>
-          <div className="message">
-            <p>User 1</p>
-            <p>Sed finibus, nisi sit amet condimentum dignissim, nunc tellus laoreet enim, quis semper tellus ipsum vitae felis. Pellentesque blandit sed nisl vitae convallis. In scelerisque vehicula euismod. Donec sit amet odio fermentum, sodales ex in, lobortis velit. Praesent rutrum interdum mi et hendrerit.</p>
-          </div>
-          <div className="message bot-message">
-            <p>Stock Consultant Bot</p>
-            <p>APPL.US quote is $93.42 per share</p>
-          </div>
-          <div className="message">
-            <p>User 2</p>
-            <p>Sed finibus, nisi sit amet condimentum dignissim.</p>
-          </div>
-        </div>
+        <MessageBoard messages={messagesList}/>
         <div className="chat-send">
-          <input type="text"/>
-          <button>Send</button>
+          <input placeholder="Enter message...." type="text" value={message} onChange={e => setMessage(e.target.value)}/>
+          <button onClick={sendMessage}>Send</button>
         </div>
       </div>
     </div>
