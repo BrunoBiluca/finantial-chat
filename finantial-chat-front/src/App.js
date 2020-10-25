@@ -38,11 +38,15 @@ function App() {
   }
 
   function onNewMessage(newMessage){
+    if(newMessage.user == 'Stock Bot'){
+      addMessage(newMessage)
+      return;
+    }
+
     if(ws.readyState === ws.OPEN){
       ws.send(JSON.stringify(newMessage))
     }
     addMessage(newMessage)
-
   }
 
   return (

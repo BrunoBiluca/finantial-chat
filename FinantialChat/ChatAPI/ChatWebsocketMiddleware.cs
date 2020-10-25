@@ -36,12 +36,7 @@ namespace ChatAPI {
                 }
 
                 var response = await ReceiveStringAsync(currentSocket, ct);
-
-                var entity = JsonSerializer.Deserialize<ChatMessage>(response);
-                entity.Id = Guid.NewGuid();
-
-                var mongoDbContext = new MongoDbContext();
-                mongoDbContext.ChatMessages.InsertOne(entity);
+                CreateMessage(response);
 
                 if(string.IsNullOrEmpty(response)) {
                     if(currentSocket.State != WebSocketState.Open) {
@@ -67,6 +62,16 @@ namespace ChatAPI {
             currentSocket.Dispose();
         }
 
+        private void CreateMessage(string response) {
+            if(string.IsNullOrEmpty(response)) return;
+
+            var entity = JsonSerializer.Deserialize<ChatMessage>(response);
+            entity.Id = Guid.NewGuid();
+
+            var mongoDbContext = new MongoDbContext();
+            mongoDbContext.ChatMessages.InsertOne(entity);
+        }
+
         private static Task SendStringAsync(WebSocket socket, string data, CancellationToken ct = default(CancellationToken)) {
             var buffer = Encoding.UTF8.GetBytes(data);
             var segment = new ArraySegment<byte>(buffer);
@@ -75,26 +80,25 @@ namespace ChatAPI {
 
         private static async Task<string> ReceiveStringAsync(WebSocket socket, CancellationToken ct = default(CancellationToken)) {
             var buffer = new ArraySegment<byte>(new byte[8192]);
-            using(var ms = new MemoryStream()) {
-                WebSocketReceiveResult result;
-                do {
-                    ct.ThrowIfCancellationRequested();
+            
+            using var ms = new MemoryStream();
+            WebSocketReceiveResult result;
+            do {
+                ct.ThrowIfCancellationRequested();
 
-                    result = await socket.ReceiveAsync(buffer, ct);
-                    ms.Write(buffer.Array, buffer.Offset, result.Count);
-                }
-                while(!result.EndOfMessage);
-
-                ms.Seek(0, SeekOrigin.Begin);
-                if(result.MessageType != WebSocketMessageType.Text) {
-                    return null;
-                }
-
-                // Encoding UTF8: https://tools.ietf.org/html/rfc6455#section-5.6
-                using(var reader = new StreamReader(ms, Encoding.UTF8)) {
-                    return await reader.ReadToEndAsync();
-                }
+                result = await socket.ReceiveAsync(buffer, ct);
+                ms.Write(buffer.Array, buffer.Offset, result.Count);
             }
+            while(!result.EndOfMessage);
+
+            ms.Seek(0, SeekOrigin.Begin);
+            if(result.MessageType != WebSocketMessageType.Text) {
+                return null;
+            }
+
+            // Encoding UTF8: https://tools.ietf.org/html/rfc6455#section-5.6
+            using var reader = new StreamReader(ms, Encoding.UTF8);
+            return await reader.ReadToEndAsync();
         }
     }
 }

@@ -33,25 +33,28 @@
   - &check; Message persistence
     - &check; Convert created_at from Frontend to DateTime on Backend
   - &check; Add http protocol for local connections
+  - &check; Pass a json objecto to configure MongoDB, instead of one on one attributes
+  - _ Check if user is register to persist the message
+    - _ Create a user to Stock Bot, and bot users will not persist messages
   - _ Get message history
-  - _ Pass a json objecto to configure MongoDB, instead of one on one attributes
   - _ Change initial page on build to swagger
 
 - StockConsultantBot
   - &check; Create bot api
   - &check; Create Get endpoint
   - &check; Parse CSV to result output
-  - _ Handle not existings stocks
-  - _ Handle generic bot problems
+  - &check; Handle not existings stocks
+  - &check; Handle generic bot problems
+  - &check; Handle http response on all cases
   - _ Connect to RabbitMQ to send this message to ChatAPI
-  - _ Handle http response on all cases
+
 
 - FrontEnd
   - &check; Chat user interface
   - &check; Front-end refactor to better compoments
   - &check; Add Enter to send messages
-  - _ Create command pattern
-    - _ Send request to StockConsultantBot to get the result
+  - &check; Create command pattern
+    - &check; Send request to StockConsultantBot to get the result
   - _ Sort messages by timestamp
   - _ Test for React render
   - _ Chat interface using the 100% height
@@ -61,6 +64,9 @@
   - stick chat-message to bottom when updated
 
 - Authentication
+
+- Deploy
+  - Create a script to run all projects
 
 - Refactor
   - _ Chat Api organize folder hierarchy
