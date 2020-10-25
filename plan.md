@@ -30,9 +30,12 @@
   - &check; Websocket connection between client-server
     - &check; Send the message
   - &check; Server broadcasts a message
-  - _ Message persistence
+  - &check; Message persistence
+    - &check; Convert created_at from Frontend to DateTime on Backend
+  - &check; Add http protocol for local connections
   - _ Get message history  
-  - _ Add http protocol for local connections
+  - _ Pass a json objecto to configure MongoDB, instead of one on one attributes
+  - _ Change initial page on build to swagger
 
 - StockConsultantBot
 

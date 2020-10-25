@@ -1,18 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace ChatAPI {
     public class ChatWebSocketMiddleware {
-        private static ConcurrentDictionary<string, WebSocket> _sockets = new ConcurrentDictionary<string, WebSocket>();
+        private static readonly ConcurrentDictionary<string, WebSocket> Sockets = new ConcurrentDictionary<string, WebSocket>();
 
         private readonly RequestDelegate _next;
 
@@ -30,7 +28,7 @@ namespace ChatAPI {
             WebSocket currentSocket = await context.WebSockets.AcceptWebSocketAsync();
             var socketId = Guid.NewGuid().ToString();
 
-            _sockets.TryAdd(socketId, currentSocket);
+            Sockets.TryAdd(socketId, currentSocket);
 
             while(true) {
                 if(ct.IsCancellationRequested) {
@@ -38,7 +36,13 @@ namespace ChatAPI {
                 }
 
                 var response = await ReceiveStringAsync(currentSocket, ct);
-                Console.WriteLine(response);
+
+                var entity = JsonSerializer.Deserialize<ChatMessage>(response);
+                entity.Id = Guid.NewGuid();
+
+                var mongoDbContext = new MongoDbContext();
+                mongoDbContext.ChatMessages.InsertOne(entity);
+
                 if(string.IsNullOrEmpty(response)) {
                     if(currentSocket.State != WebSocketState.Open) {
                         break;
@@ -47,7 +51,7 @@ namespace ChatAPI {
                     continue;
                 }
 
-                foreach(var socket in _sockets) {
+                foreach(var socket in Sockets) {
                     if(socket.Value.State != WebSocketState.Open) {
                         continue;
                     }
@@ -57,7 +61,7 @@ namespace ChatAPI {
             }
 
             WebSocket dummy;
-            _sockets.TryRemove(socketId, out dummy);
+            Sockets.TryRemove(socketId, out dummy);
 
             await currentSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", ct);
             currentSocket.Dispose();
