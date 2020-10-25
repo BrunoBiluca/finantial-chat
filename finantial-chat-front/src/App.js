@@ -23,6 +23,7 @@ function App() {
 
     ws.onmessage = evt => {
       const message = JSON.parse(evt.data)
+      console.log(message)
       addMessage(message)
     }
 
