@@ -25,7 +25,6 @@ namespace ChatAPI {
                 app.UseDeveloperExceptionPage();
             }
 
-            // TODO: adicionar http redirection para modo local
             app.UseHttpsRedirection();
 
             app.UseRouting();

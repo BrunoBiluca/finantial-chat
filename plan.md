@@ -55,10 +55,10 @@
 
 ## Secondary goals
 
-- Chat will show when user is connected and disconnected
-- Chat statistics
-  - currentClients
-  - totalClients
+- _ Chat will show when user is connected and disconnected
+- _ Chat statistics
+  - _ currentClients
+  - _ totalClients
 
 # Questions:
  - What is build an installer?
