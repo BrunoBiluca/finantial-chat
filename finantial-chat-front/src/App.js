@@ -4,7 +4,7 @@ import './App.css'
 import MessageSendBox from './MessageSendBox';
 
 function App() {
-  const chatApiURL = "wss://localhost:44315"
+  const chatApiURL = "ws://localhost:44315"
 
   var browser = window.navigator.userAgent.includes('Edg') ? 'Edge': 'Chrome';
 

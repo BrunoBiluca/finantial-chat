@@ -38,9 +38,13 @@
   - _ Change initial page on build to swagger
 
 - StockConsultantBot
-  - _ Create bot api
-  - _ Create Get endpoint
-  - _ Parse CSV to result output
+  - &check; Create bot api
+  - &check; Create Get endpoint
+  - &check; Parse CSV to result output
+  - _ Handle not existings stocks
+  - _ Handle generic bot problems
+  - _ Connect to RabbitMQ to send this message to ChatAPI
+  - _ Handle http response on all cases
 
 - FrontEnd
   - &check; Chat user interface
