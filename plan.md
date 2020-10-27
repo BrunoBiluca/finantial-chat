@@ -56,18 +56,19 @@
   - &check; Add Enter to send messages
   - &check; Create command pattern
     - &check; Send request to StockConsultantBot to get the result
-  - _ Sort messages by timestamp
+  - &check; Sort messages by timestamp
+  - &check; Show only 50 messages
+  - &check; stick chat-message to bottom when updated
   - _ Test for React render
   - _ Chat interface using the 100% height
   - _ layout v2
     - _ rounded button
     - _ better colors
-  - &check; stick chat-message to bottom when updated
 
 - Authentication
 
 - Deploy
-  - Create a script to run all projects
+  - _ Create a script to run all projects
 
 - Refactor
   - _ Chat Api organize folder hierarchy

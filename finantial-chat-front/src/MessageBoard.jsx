@@ -12,12 +12,16 @@ export default function MessageBoard(props) {
         messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
     }
 
+    let sortedMessages = props.messages.sort(function (first, second) {
+        return first.created_at - second.created_at;
+    })
+
     return (
         <div className="chat-messages">
-            {props.messages.map(message => {
+            {sortedMessages.map(message => {
                 return <MessageItem key={message.created_at} message={message} />
             })}
-            <div style={{margin: 0, padding: 0, border: 0}} ref={messagesEndRef}></div>
+            <div style={{ margin: 0, padding: 0, border: 0 }} ref={messagesEndRef}></div>
         </div>
     )
 }

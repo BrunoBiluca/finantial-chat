@@ -35,7 +35,7 @@ function App() {
   }, [messagesList])
 
   function addMessage(newMessage){
-    setMessagesList([...messagesList, newMessage])
+    setMessagesList([...messagesList.slice(-50), newMessage])
   }
 
   function onNewMessage(newMessage){
