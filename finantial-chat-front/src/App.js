@@ -3,6 +3,8 @@ import MessageBoard from './MessageBoard'
 import './App.css'
 import MessageSendBox from './MessageSendBox';
 
+const welcomeMessage = { 'created_at': 0, 'user': 'Bruno', "message": "Welcome to your Finantial Chat Room, talk about financies with your friends and enjoy check or Stock Consultant Bot service. Thanks."}
+
 function App() {
   const chatApiURL = "ws://localhost:44315"
 
@@ -10,15 +12,20 @@ function App() {
 
   const [user, setUser] = useState(browser)
 
-  const [messagesList, setMessagesList] = useState([
-    { 'created_at': 0, 'user': 'Bruno', "message": "Welcome to your Finantial Chat Room, talk about financies with your friends and enjoy check or Stock Consultant Bot service. Thanks."}
-  ])
+  const [messagesList, setMessagesList] = useState([welcomeMessage])
 
   const [ws, setWs] = useState(new WebSocket(chatApiURL))
 
   useEffect(() => {
-    // TODO: get here message history
+    fetch("http://localhost:44315/api/chat-messages")
+    .then(r => {
+      r.json().then(response => {
+        setMessagesList([welcomeMessage, ...response])
+      })
+    })
+  }, [])
 
+  useEffect(() => {
     ws.onopen = () => {
       console.log('connected')
     }

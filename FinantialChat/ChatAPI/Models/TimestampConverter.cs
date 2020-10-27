@@ -8,6 +8,9 @@ public class TimestampConverter : JsonConverter<DateTime> {
     }
 
     public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options) {
-        writer.WriteStringValue(value.ToString());
+        writer.WriteNumberValue((
+            TimeZoneInfo.ConvertTimeToUtc(value) 
+            - new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+        ).TotalMilliseconds);
     }
 }

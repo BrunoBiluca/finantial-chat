@@ -34,11 +34,10 @@
     - &check; Convert created_at from Frontend to DateTime on Backend
   - &check; Add http protocol for local connections
   - &check; Pass a json objecto to configure MongoDB, instead of one on one attributes
+  - &check; Get message history
   - _ Consume messages on Queue bot-messages
   - _ Check if user is register to persist the message
     - _ Create a user to Stock Bot, and bot users will not persist messages
-  - _ Get message history
-  - _ Change initial page on build to swagger
 
 - StockConsultantBot
   - &check; Create bot api
@@ -66,6 +65,7 @@
     - _ better colors
 
 - Authentication
+  - _ Create authentication system using Identity
 
 - Deploy
   - _ Create a script to run all projects

@@ -16,10 +16,14 @@ export default function MessageBoard(props) {
         return first.created_at - second.created_at;
     })
 
+    const generateKey = (pre) => {
+        return `${ pre }_${ new Date().getTime() }`;
+    }
+
     return (
         <div className="chat-messages">
-            {sortedMessages.map(message => {
-                return <MessageItem key={message.created_at} message={message} />
+            {sortedMessages.map((message, index) => {
+                return <MessageItem key={index} message={message} />
             })}
             <div style={{ margin: 0, padding: 0, border: 0 }} ref={messagesEndRef}></div>
         </div>
