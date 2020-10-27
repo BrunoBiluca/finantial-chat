@@ -34,6 +34,7 @@
     - &check; Convert created_at from Frontend to DateTime on Backend
   - &check; Add http protocol for local connections
   - &check; Pass a json objecto to configure MongoDB, instead of one on one attributes
+  - _ Consume messages on Queue bot-messages
   - _ Check if user is register to persist the message
     - _ Create a user to Stock Bot, and bot users will not persist messages
   - _ Get message history
@@ -46,7 +47,7 @@
   - &check; Handle not existings stocks
   - &check; Handle generic bot problems
   - &check; Handle http response on all cases
-  - _ Connect to RabbitMQ to send this message to ChatAPI
+  - &check; Connect to RabbitMQ to send this message to ChatAPI
 
 
 - FrontEnd
@@ -61,7 +62,7 @@
   - _ layout v2
     - _ rounded button
     - _ better colors
-  - stick chat-message to bottom when updated
+  - &check; stick chat-message to bottom when updated
 
 - Authentication
 
@@ -73,7 +74,7 @@
   - _ Front End organize folder hierarchy
 
 - Bugs
-  - _ Last sended message is ovewritten on chat message board
+  - &check; Last sended message is ovewritten on chat message board
 
 ## Secondary goals
 

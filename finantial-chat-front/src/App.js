@@ -11,42 +11,37 @@ function App() {
   const [user, setUser] = useState(browser)
 
   const [messagesList, setMessagesList] = useState([
-    { 'created_at': 0, 'user': 'user 1', "message": "message 1"}
+    { 'created_at': 0, 'user': 'Bruno', "message": "Welcome to your Finantial Chat Room, talk about financies with your friends and enjoy check or Stock Consultant Bot service. Thanks."}
   ])
 
-  let ws = new WebSocket(chatApiURL)
+  const [ws, setWs] = useState(new WebSocket(chatApiURL))
 
   useEffect(() => {
+    // TODO: get here message history
+
     ws.onopen = () => {
       console.log('connected')
     }
 
     ws.onmessage = evt => {
       const message = JSON.parse(evt.data)
-      console.log(message)
       addMessage(message)
     }
 
     ws.onclose = () => {
       console.log('disconnected')
-      ws = new WebSocket(chatApiURL)
+      setWs(new WebSocket(chatApiURL))
     }
-  }, [])
+  }, [messagesList])
 
   function addMessage(newMessage){
     setMessagesList([...messagesList, newMessage])
   }
 
   function onNewMessage(newMessage){
-    if(newMessage.user == 'Stock Bot'){
-      addMessage(newMessage)
-      return;
-    }
-
     if(ws.readyState === ws.OPEN){
       ws.send(JSON.stringify(newMessage))
     }
-    addMessage(newMessage)
   }
 
   return (
