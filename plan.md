@@ -19,10 +19,6 @@
 - Persist user's messages
 - Documentation all features
 
-# Project Architeture
-
-![project_arquiteture.png](project_arquiteture.png)
-
 # Task
 
 - ChatAPI
@@ -65,14 +61,14 @@
     - _ better colors
 
 - Authentication
-  - _ Create authentication system using Identity
+  - &check; Create authentication system using Identity
 
 - Deploy
   - _ Create a script to run all projects
 
 - Refactor
-  - _ Chat Api organize folder hierarchy
-  - _ Front End organize folder hierarchy
+  - &check; Chat Api organize folder hierarchy
+  - &check; Front End organize folder hierarchy
 
 - Bugs
   - &check; Last sended message is ovewritten on chat message board
@@ -84,8 +80,4 @@
 - _ Chat statistics
   - _ currentClients
   - _ totalClients
-
-# Questions:
- - What is build an installer?
-   - Maybe is the web ap ready to deploy
  
