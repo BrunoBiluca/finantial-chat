@@ -1,5 +1,8 @@
+using ChatAPI.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,6 +22,14 @@ namespace ChatAPI {
 
             MongoDbContext.Configuration = Configuration.GetSection("MongoConnection").Get<MongoDbConfiguration>();
 
+            services.AddDbContext<ChatUsersDbContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
+            );
+
+            services.AddIdentity<ChatUser, IdentityRole>()
+                .AddEntityFrameworkStores<ChatUsersDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddSwaggerGen(o =>
                 o.SwaggerDoc("v1", new OpenApiInfo { Title = "Chat Api", Version = "v1" }));
         }
@@ -30,8 +41,15 @@ namespace ChatAPI {
 
             app.UseHttpsRedirection();
 
+            app.UseCors(o => o
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+            );
+
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => {

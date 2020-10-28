@@ -34,6 +34,12 @@ namespace StockConsultantBot {
                 endpoints.MapControllers();
             });
 
+            app.UseCors(o => o
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+            );
+
             var logger = loggerFactory.CreateLogger<ConsoleLogger>();
             logger.LogInformation("##################################################################################");
             logger.LogInformation($"####   Executing Configure().... {DateTime.Now.ToLongTimeString()}");

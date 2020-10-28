@@ -1,5 +1,8 @@
 version: '3'
 
+volumes:
+    data:
+
 services:
   mongo-express:
     image: mongo-express
@@ -41,6 +44,23 @@ services:
       - "5672:5672"
     labels:
       NAME: "rabbitmq1"
+
+  auth_database:
+    image: postgres:13
+    environment:
+      POSTGRES_PASSWORD: 123Mudar
+    ports: 
+      - 5432:5432
+    volumes:
+      - data:/var/lib/postgresql/data
+      - ./database:/database
+      # - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
 
 networks: 
     mongo-compose-network:

@@ -2,27 +2,33 @@ import React, { useEffect, useState } from 'react'
 import MessageBoard from './MessageBoard'
 import './App.css'
 import MessageSendBox from './MessageSendBox';
+import { Redirect } from 'react-router-dom';
 
-const welcomeMessage = { 'created_at': 0, 'user': 'Bruno', "message": "Welcome to your Finantial Chat Room, talk about financies with your friends and enjoy check or Stock Consultant Bot service. Thanks."}
+const welcomeMessage = { 'created_at': 0, 'user': 'Bruno', "message": "Welcome to your Finantial Chat Room, talk about financies with your friends and enjoy check or Stock Consultant Bot service. Thanks." }
 
 function App() {
   const chatApiURL = "ws://localhost:44315"
 
-  var browser = window.navigator.userAgent.includes('Edg') ? 'Edge': 'Chrome';
-
-  const [user, setUser] = useState(browser)
+  const [user, setUser] = useState()
 
   const [messagesList, setMessagesList] = useState([welcomeMessage])
 
   const [ws, setWs] = useState(new WebSocket(chatApiURL))
 
   useEffect(() => {
+    let storageUser = JSON.parse(sessionStorage.getItem('user'))
+
+    if (storageUser === null) {
+      window.location = "/"
+    }
+    setUser(storageUser.user.name)
+
     fetch("http://localhost:44315/api/chat-messages")
-    .then(r => {
-      r.json().then(response => {
-        setMessagesList([welcomeMessage, ...response])
+      .then(r => {
+        r.json().then(response => {
+          setMessagesList([welcomeMessage, ...response])
+        })
       })
-    })
   }, [])
 
   useEffect(() => {
@@ -41,15 +47,18 @@ function App() {
     }
   }, [messagesList])
 
-  function addMessage(newMessage){
+  function addMessage(newMessage) {
     setMessagesList([...messagesList.slice(-50), newMessage])
   }
 
-  function onNewMessage(newMessage){
-    if(ws.readyState === ws.OPEN){
+  function onNewMessage(newMessage) {
+    if (ws.readyState === ws.OPEN) {
       ws.send(JSON.stringify(newMessage))
     }
   }
+
+
+
 
   return (
     <div className="chat">
@@ -59,8 +68,8 @@ function App() {
         <h3>Off-line users</h3>
       </div>
       <div className="chat-main">
-        <MessageBoard messages={messagesList}/>
-        <MessageSendBox user={user} onNewMessage={onNewMessage}/>
+        <MessageBoard messages={messagesList} />
+        <MessageSendBox user={user} onNewMessage={onNewMessage} />
       </div>
     </div>
   );
