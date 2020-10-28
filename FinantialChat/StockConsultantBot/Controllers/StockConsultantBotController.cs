@@ -17,7 +17,7 @@ namespace StockConsultantBot.Controllers {
             this.logger = logger;
         }
 
-        [HttpGet("/{stockName}/http", Name = "GetHttp")]
+        [HttpGet("{stockName}", Name = "Get")]
         public async Task<ActionResult> Get(string stockName) {
 
             try {
@@ -45,56 +45,56 @@ namespace StockConsultantBot.Controllers {
             }
         }
 
-        [HttpGet("{stockName}", Name = "Get")]
-        public ActionResult GetRabbitMQ(string stockName) {
-            FowardMessage(stockName);
+        //[HttpGet("{stockName}/rabbitmq", Name = "Get")]
+        //public ActionResult GetRabbitMQ(string stockName) {
+        //    FowardMessage(stockName);
 
-            Console.WriteLine("Front-end answered");
-            return Accepted();
-        }
+        //    Console.WriteLine("Front-end answered");
+        //    return Accepted();
+        //}
 
-        private async void FowardMessage(string stockName) {
-            await Task.Run(async () => {
-                var message = await FormatMessage(stockName);
-                Console.WriteLine("Message delivered to RabbitMQ");
-                RabbitMQContext.SendMessage(message);
-            });
-        }
+        //private async void FowardMessage(string stockName) {
+        //    await Task.Run(async () => {
+        //        var message = await FormatMessage(stockName);
+        //        Console.WriteLine("Message delivered to RabbitMQ");
+        //        RabbitMQContext.SendMessage(message);
+        //    });
+        //}
 
-        private async Task<ChatMessage> FormatMessage(string stockName) {
-            var chatMessage = new ChatMessage() {
-                UserName = "Stock Bot",
-                CreatedAt = DateTime.Now
-            };
-            try {
-                var stream = await RequestStooqAsync(stockName);
-                Console.WriteLine("Request Stooq Finished");
+        //private async Task<ChatMessage> FormatMessage(string stockName) {
+        //    var chatMessage = new ChatMessage() {
+        //        UserName = "Stock Bot",
+        //        CreatedAt = DateTime.Now
+        //    };
+        //    try {
+        //        var stream = await RequestStooqAsync(stockName);
+        //        Console.WriteLine("Request Stooq Finished");
 
-                using var csv = new StreamReader(stream);
-                var headers = csv.ReadLine();
-                var content = csv.ReadLine();
-                var fields = content.Split(',');
+        //        using var csv = new StreamReader(stream);
+        //        var headers = csv.ReadLine();
+        //        var content = csv.ReadLine();
+        //        var fields = content.Split(',');
 
-                if(fields[1] == "N/D") {
-                    chatMessage.Message = $"{fields[0].ToUpper()} was not found. Did you spelled correcly the stock's name?";
-                    return chatMessage;
-                }
+        //        if(fields[1] == "N/D") {
+        //            chatMessage.Message = $"{fields[0].ToUpper()} was not found. Did you spelled correcly the stock's name?";
+        //            return chatMessage;
+        //        }
 
-                var stockInfo = new StockInfo() {
-                    Symbol = fields[0].ToUpper(),
-                    Open = decimal.Parse(fields[3], new CultureInfo("en-US"))
-                };
+        //        var stockInfo = new StockInfo() {
+        //            Symbol = fields[0].ToUpper(),
+        //            Open = decimal.Parse(fields[3], new CultureInfo("en-US"))
+        //        };
 
-                chatMessage.Message = $"{stockInfo.Symbol} quote is ${stockInfo.Open.ToString("0.00", CultureInfo.InvariantCulture)} per share";
-                return chatMessage;
-            } catch(FormatException ex) {
-                chatMessage.Message = "Internal server error.";
-                return chatMessage;
-            } catch(HttpRequestException) {
-                chatMessage.Message = "Could not connect to stooq.com. Please try again later.";;
-                return chatMessage;
-            }
-        }
+        //        chatMessage.Message = $"{stockInfo.Symbol} quote is ${stockInfo.Open.ToString("0.00", CultureInfo.InvariantCulture)} per share";
+        //        return chatMessage;
+        //    } catch(FormatException ex) {
+        //        chatMessage.Message = "Internal server error.";
+        //        return chatMessage;
+        //    } catch(HttpRequestException) {
+        //        chatMessage.Message = "Could not connect to stooq.com. Please try again later.";;
+        //        return chatMessage;
+        //    }
+        //}
 
         private async Task<Stream> RequestStooqAsync(string stockName) {
             var client = new HttpClient();

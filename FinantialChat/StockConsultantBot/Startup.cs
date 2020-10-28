@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Microsoft.VisualStudio.Web.CodeGeneration;
 using System;
 
@@ -17,6 +18,9 @@ namespace StockConsultantBot {
 
         public void ConfigureServices(IServiceCollection services) {
             services.AddControllers();
+
+            services.AddSwaggerGen(o =>
+                o.SwaggerDoc("v1", new OpenApiInfo { Title = "Stock Consultant Bot", Version = "v1" }));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory) {
@@ -39,6 +43,9 @@ namespace StockConsultantBot {
                 .AllowAnyMethod()
                 .AllowAnyHeader()
             );
+
+            app.UseSwagger();
+            app.UseSwaggerUI(o => o.SwaggerEndpoint("/swagger/v1/swagger.json", "Chat Api V1"));
 
             var logger = loggerFactory.CreateLogger<ConsoleLogger>();
             logger.LogInformation("##################################################################################");

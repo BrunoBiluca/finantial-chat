@@ -1,4 +1,5 @@
 using ChatAPI.Authentication;
+using ChatAPI.RabbitMQ;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -61,6 +62,7 @@ namespace ChatAPI {
 
             app.UseWebSockets();
             app.UseMiddleware<ChatWebSocketMiddleware>();
+
         }
     }
 }

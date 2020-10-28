@@ -66,6 +66,9 @@ namespace ChatAPI {
             if(string.IsNullOrEmpty(response)) return;
 
             var entity = JsonSerializer.Deserialize<ChatMessage>(response);
+
+            if(entity.UserName == "Stock Bot") return;
+
             entity.Id = Guid.NewGuid();
 
             var mongoDbContext = new MongoDbContext();
@@ -80,7 +83,7 @@ namespace ChatAPI {
 
         private static async Task<string> ReceiveStringAsync(WebSocket socket, CancellationToken ct = default(CancellationToken)) {
             var buffer = new ArraySegment<byte>(new byte[8192]);
-            
+
             using var ms = new MemoryStream();
             WebSocketReceiveResult result;
             do {
