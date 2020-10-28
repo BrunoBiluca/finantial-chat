@@ -14,7 +14,7 @@ It was a very interesting project, I learned a lot and thank you guys very much 
 
 This is the main screen of the application:
 
-![Chat Screen](chat-screen.png)
+![Chat Screen](https://github.com/BrunoBiluca/finantial-chat/blob/main/chat-screen.PNG)
 
 # How to use
 
